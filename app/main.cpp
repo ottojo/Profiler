@@ -1,6 +1,6 @@
-#include <ProfilerLib/include/ProfilerLib/DurationEvent.hpp>
-#include <ProfilerLib/include/ProfilerLib/Profiler.hpp>
-#include <ProfilerLib/include/ProfilerLib/ScopeEvent.hpp>
+#include "ProfilerLib/DurationEvent.hpp"
+#include "ProfilerLib/Profiler.hpp"
+#include "ProfilerLib/ScopeEvent.hpp"
 #include <future>
 #include <iostream>
 #include <random>

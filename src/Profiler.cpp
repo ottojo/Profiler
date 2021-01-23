@@ -5,7 +5,7 @@
  * Description here TODO
  */
 
-#include <ProfilerLib/Profiler.hpp>
+#include "ProfilerLib/Profiler.hpp"
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>

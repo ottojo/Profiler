@@ -5,7 +5,7 @@
  * Description here TODO
  */
 
-#include <ProfilerLib/TraceEventFile.hpp>
+#include "ProfilerLib/TraceEventFile.hpp"
 
 void to_json(nlohmann::json &j, const TraceEventFile &f) {
     j = {{"traceEvents",     f.traceEvents},

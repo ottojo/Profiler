@@ -5,8 +5,8 @@
  * Description here TODO
  */
 
-#include <ProfilerLib/ProfilerUtil.hpp>
-#include <ProfilerLib/ScopeEvent.hpp>
+#include "ProfilerLib/ProfilerUtil.hpp"
+#include "ProfilerLib/ScopeEvent.hpp"
 #include <utility>
 
 ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
