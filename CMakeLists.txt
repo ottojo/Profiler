@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.17)
 project(Profiler)
 
-set(CMAKE_CXX_STANDARD 20)
-
-add_subdirectory(lib/ProfilerLib)
-
-add_executable(testprogram main.cpp)
-target_link_libraries(testprogram profilerLib pthread)
-target_include_directories(testprogram PRIVATE SYSTEM lib)
+project(ProfilerLib)
+add_library(profilerLib src/Profiler.cpp src/ScopeEvent.cpp src/ProfilerUtil.cpp src/TraceEventFile.cpp src/DurationEvent.cpp)
+target_include_directories(profilerLib PUBLIC external include)
+target_compile_features(profilerLib PRIVATE cxx_std_17)

@@ -5,11 +5,11 @@
  * Description here TODO
  */
 
-#include "DurationEvent.hpp"
-
+#include <ProfilerLib/DurationEvent.hpp>
 #include <utility>
 
-DurationEvent::DurationEvent(Profiler &p, std::string name) : p{p}, name{std::move(name)} {}
+DurationEvent::DurationEvent(Profiler &p, std::string name) : p{p}, name{std::move(name)} {
+}
 
 void DurationEvent::start() {
     assert(not started);

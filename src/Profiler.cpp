@@ -5,16 +5,15 @@
  * Description here TODO
  */
 
-#include "Profiler.hpp"
-
-#include <iostream>
-#include <utility>
+#include <ProfilerLib/Profiler.hpp>
 #include <fstream>
+#include <iostream>
 #include <nlohmann/json.hpp>
+#include <utility>
 
 Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
-        name{std::move(name)},
-        outputPath{std::move(outputPath)} {
+    name{std::move(name)},
+    outputPath{std::move(outputPath)} {
     submitInstantEvent("Profiler " + name + " starting", Scope::Global);
 }
 
@@ -24,9 +23,7 @@ void Profiler::submitEvent(const TraceEvent &event) {
 }
 
 Profiler::~Profiler() {
-    nlohmann::json j = eventFile;
-    std::ofstream o(outputPath);
-    o << std::setw(4) << j << std::endl;
+    save();
 }
 
 void Profiler::setProcessName(const std::string &processName) {
@@ -59,4 +56,11 @@ void Profiler::submitCounterEvent(const std::string &counterName, const std::map
     e.name = counterName;
     e.args = data;
     submitEvent(e);
+}
+
+void Profiler::save() {
+    std::cout << "Profiler saving data" << std::endl;
+    nlohmann::json j = eventFile;
+    std::ofstream o(outputPath);
+    o << std::setw(4) << j << std::endl;
 }

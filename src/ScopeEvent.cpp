@@ -5,12 +5,11 @@
  * Description here TODO
  */
 
-#include "ScopeEvent.hpp"
-
+#include <ProfilerLib/ProfilerUtil.hpp>
+#include <ProfilerLib/ScopeEvent.hpp>
 #include <utility>
-#include "ProfilerUtil.hpp"
 
-ScopeEvent::ScopeEvent(Profiler &profiler, std::string name):p{profiler} {
+ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
     TraceEvent e;
     e.ph = TraceEventType::DurationBegin;
     e.name = std::move(name);
