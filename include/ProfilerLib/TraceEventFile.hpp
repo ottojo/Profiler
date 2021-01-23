@@ -18,4 +18,4 @@ struct TraceEventFile {
 
 void to_json(nlohmann::json &j, const TraceEventFile &traceEventFile);
 
-#endif //PROFILER_TRACEEVENTFILE_HPP
+#endif // PROFILER_TRACEEVENTFILE_HPP

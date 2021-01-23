@@ -12,18 +12,18 @@
 #include "Profiler.hpp"
 
 class DurationEvent {
-    public:
-        DurationEvent(Profiler &p, std::string name);
+  public:
+    DurationEvent(Profiler &p, std::string name);
 
-        void start();
+    void start();
 
-        void stop();
+    void stop();
 
-    private:
-        Profiler &p;
-        std::string name;
-        bool started = false;
+  private:
+    Profiler &p;
+    std::string name;
+    bool started = false;
 };
 
 
-#endif //PROFILER_DURATIONEVENT_HPP
+#endif // PROFILER_DURATIONEVENT_HPP

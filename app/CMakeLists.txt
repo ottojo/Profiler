@@ -1,2 +1,5 @@
-add_executable(testprogram main.cpp)
-target_link_libraries(testprogram profilerLib pthread)
+add_executable(profilerExample example.main.cpp)
+target_link_libraries(profilerExample profilerLib pthread)
+
+add_executable(profilerMerge merge.main.cpp)
+target_link_libraries(profilerMerge profilerLib)

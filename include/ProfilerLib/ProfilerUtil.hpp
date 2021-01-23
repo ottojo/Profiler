@@ -22,5 +22,5 @@ namespace profilerUtil {
     std::thread::id tid();
 
     std::size_t tidHash();
-}
-#endif //PROFILER_PROFILERUTIL_HPP
+} // namespace profilerUtil
+#endif // PROFILER_PROFILERUTIL_HPP

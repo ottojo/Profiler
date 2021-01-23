@@ -29,6 +29,6 @@ namespace nlohmann {
             }
         }
     };
-}
+} // namespace nlohmann
 
 #endif // OPTIONALSERIALIZATION_HPP

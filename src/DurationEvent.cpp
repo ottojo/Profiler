@@ -6,6 +6,7 @@
  */
 
 #include "ProfilerLib/DurationEvent.hpp"
+
 #include <utility>
 
 DurationEvent::DurationEvent(Profiler &p, std::string name) : p{p}, name{std::move(name)} {

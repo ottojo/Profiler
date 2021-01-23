@@ -6,7 +6,7 @@ add_library(profilerLib src/Profiler.cpp src/ScopeEvent.cpp src/ProfilerUtil.cpp
 target_include_directories(profilerLib PUBLIC external include)
 target_compile_features(profilerLib PUBLIC cxx_std_17)
 
-option(BUILD_TEST "build executable" OFF)
-if (BUILD_TEST)
+option(BUILD_EXECUTABLES "build executable" OFF)
+if (BUILD_EXECUTABLES)
     add_subdirectory(app)
 endif ()

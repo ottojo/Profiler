@@ -11,18 +11,18 @@
 #include "Profiler.hpp"
 
 class ScopeEvent {
-    public:
-        ScopeEvent(Profiler &profiler, std::string name);
+  public:
+    ScopeEvent(Profiler &profiler, std::string name);
 
-        ScopeEvent(const ScopeEvent &other) = delete;
+    ScopeEvent(const ScopeEvent &other) = delete;
 
-        ScopeEvent &operator=(const ScopeEvent &rhs) = delete;
+    ScopeEvent &operator=(const ScopeEvent &rhs) = delete;
 
-        ~ScopeEvent();
+    ~ScopeEvent();
 
-    private:
-        Profiler &p;
+  private:
+    Profiler &p;
 };
 
 
-#endif //PROFILER_SCOPEEVENT_HPP
+#endif // PROFILER_SCOPEEVENT_HPP

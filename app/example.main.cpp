@@ -1,10 +1,11 @@
-#include "ProfilerLib/DurationEvent.hpp"
-#include "ProfilerLib/Profiler.hpp"
-#include "ProfilerLib/ScopeEvent.hpp"
 #include <future>
 #include <iostream>
 #include <random>
 #include <thread>
+
+#include "ProfilerLib/DurationEvent.hpp"
+#include "ProfilerLib/Profiler.hpp"
+#include "ProfilerLib/ScopeEvent.hpp"
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -19,8 +20,7 @@ void importantFunction(int recurse = 5) {
     std::uniform_int_distribution distribution(5, 10);
     std::this_thread::sleep_for(std::chrono::milliseconds(distribution(gen)));
     static int i = 0;
-    p.submitCounterEvent("some counter", {{"i", i},
-                                          {"c", 0}});
+    p.submitCounterEvent("some counter", {{"i", i}, {"c", 0}});
     i++;
 }
 
@@ -29,7 +29,7 @@ void asyncCalls() {
     std::vector<std::future<void>> futures;
     futures.reserve(10);
 
-    DurationEvent threadsStarting(p,"Starting threads");
+    DurationEvent threadsStarting(p, "Starting threads");
     threadsStarting.start();
 
     for (int i = 0; i < 10; i++) {
@@ -44,7 +44,7 @@ void asyncCalls() {
 
     p.submitInstantEvent("tasks started, now waiting", Scope::Process);
 
-    for (auto &f:futures) {
+    for (auto &f : futures) {
         f.wait();
     }
 }

@@ -8,11 +8,9 @@
 #include "ProfilerLib/TraceEventFile.hpp"
 
 void to_json(nlohmann::json &j, const TraceEventFile &f) {
-    j = {{"traceEvents",     f.traceEvents},
-         {"displayTimeUnit", f.displayTimeUnit}};
+    j = {{"traceEvents", f.traceEvents}, {"displayTimeUnit", f.displayTimeUnit}};
     // Additional metadata is appended to the other fields, not kept in a metadata object
-    for (const auto &e: f.metaData.get<nlohmann::json::object_t>()) {
+    for (const auto &e : f.metaData.get<nlohmann::json::object_t>()) {
         j[e.first] = e.second;
     }
 }
-

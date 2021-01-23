@@ -6,6 +6,7 @@
  */
 
 #include "ProfilerLib/ProfilerUtil.hpp"
+
 #include <unistd.h>
 
 namespace profilerUtil {
@@ -24,4 +25,4 @@ namespace profilerUtil {
     std::size_t tidHash() {
         return std::hash<std::thread::id>{}(tid());
     }
-}
+} // namespace profilerUtil
