@@ -1,0 +1,3 @@
+*.json
+cmake-build*
+.idea
