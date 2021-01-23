@@ -4,24 +4,49 @@
 
 #include <ProfilerLib/Profiler.hpp>
 #include <ProfilerLib/ScopeEvent.hpp>
+#include <future>
 
 std::random_device rd;
 std::mt19937 gen(rd());
 
 Profiler p("MainProfiler", "trace.json");
 
-void importantFunction(bool recurse = true) {
+void importantFunction(int recurse = 5) {
     ScopeEvent e(p, "importantFunction");
-    if (recurse) {
-        importantFunction(false);
+    if (recurse > 0) {
+        importantFunction(recurse - 1);
     }
     std::uniform_int_distribution distribution(5, 10);
     std::this_thread::sleep_for(std::chrono::milliseconds(distribution(gen)));
+    static int i = 0;
+    p.submitCounterEvent("some counter", {{"i", i},
+                                          {"c", 0}});
+    i++;
+}
+
+void asyncCalls() {
+    ScopeEvent e(p, "asyncCalls");
+    std::vector<std::future<void>> futures;
+    futures.reserve(10);
+    for (int i = 0; i < 10; i++) {
+        futures.emplace_back(std::async([i]() {
+            ScopeEvent e(p, "lambda in asyncCalls");
+            p.setThreadName("async call nr. " + std::to_string(i));
+            importantFunction(0);
+        }));
+    }
+
+    for (auto &f:futures) {
+        f.wait();
+    }
 }
 
 int main() {
-    ScopeEvent e(p, "main");
+    ScopeEvent e(p, "main function");
+    p.setProcessName("TestProcess");
+    p.setThreadName("main thread");
     std::cout << "Hello, World!" << std::endl;
     importantFunction();
+    asyncCalls();
     return 0;
 }

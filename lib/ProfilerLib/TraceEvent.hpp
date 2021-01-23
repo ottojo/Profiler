@@ -42,7 +42,6 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TraceEventType, {
     { TraceEventType::FlowStart, "s" },
     { TraceEventType::FlowStep, "t" },
     { TraceEventType::FlowEnd, "f" },
-    { TraceEventType::Sample, "P" },
     { TraceEventType::ObjectCreated, "N" },
     { TraceEventType::ObjectSnapshot, "O" },
     { TraceEventType::ObjectDestroyed, "D" },

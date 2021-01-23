@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(lib/ProfilerLib)
 
 add_executable(testprogram main.cpp)
-target_link_libraries(testprogram profilerLib)
+target_link_libraries(testprogram profilerLib pthread)
 target_include_directories(testprogram PRIVATE SYSTEM lib)
