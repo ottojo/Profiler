@@ -36,6 +36,8 @@ void asyncCalls() {
         }));
     }
 
+    p.submitInstantEvent("tasks started, now waiting", Scope::Process);
+
     for (auto &f:futures) {
         f.wait();
     }
