@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "TraceEvent.hpp"
+#include "TraceEventFile.hpp"
 
 class Profiler {
     public:
@@ -22,7 +23,7 @@ class Profiler {
     private:
         std::string name;
         std::filesystem::path outputPath;
-        std::vector<TraceEvent> events;
+        TraceEventFile eventFile;
 };
 
 #endif //PROFILER_PROFILER_HPP

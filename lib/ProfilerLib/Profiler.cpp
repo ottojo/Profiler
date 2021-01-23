@@ -23,11 +23,11 @@ Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
 }
 
 void Profiler::submitEvent(const TraceEvent &event) {
-    events.emplace_back(event);
+    eventFile.traceEvents.emplace_back(event);
 }
 
 Profiler::~Profiler() {
-    nlohmann::json j = events;
+    nlohmann::json j = eventFile;
     std::ofstream o(outputPath);
     o << std::setw(4) << j << std::endl;
 }
