@@ -17,10 +17,12 @@
 #include "TraceEventFile.hpp"
 
 class ScopeEvent;
+class DurationEvent;
 
 class Profiler {
         // Friend classes used to hide submitEvent from user, who should use public functions of Profiler instead
         friend class ScopeEvent;
+        friend class DurationEvent;
 
     public:
         Profiler(std::string name, std::filesystem::path outputPath);

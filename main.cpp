@@ -4,6 +4,7 @@
 
 #include <ProfilerLib/Profiler.hpp>
 #include <ProfilerLib/ScopeEvent.hpp>
+#include <ProfilerLib/DurationEvent.hpp>
 #include <future>
 
 std::random_device rd;
@@ -28,6 +29,10 @@ void asyncCalls() {
     ScopeEvent e(p, "asyncCalls");
     std::vector<std::future<void>> futures;
     futures.reserve(10);
+
+    DurationEvent threadsStarting(p,"Starting threads");
+    threadsStarting.start();
+
     for (int i = 0; i < 10; i++) {
         futures.emplace_back(std::async([i]() {
             ScopeEvent e(p, "lambda in asyncCalls");
@@ -35,6 +40,8 @@ void asyncCalls() {
             importantFunction(0);
         }));
     }
+
+    threadsStarting.stop();
 
     p.submitInstantEvent("tasks started, now waiting", Scope::Process);
 
