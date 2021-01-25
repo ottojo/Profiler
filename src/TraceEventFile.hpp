@@ -2,13 +2,16 @@
  * @file TraceEventFile.hpp.h
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
 #ifndef PROFILER_TRACEEVENTFILE_HPP
 #define PROFILER_TRACEEVENTFILE_HPP
 
-#include "TraceEvent.hpp"
+#include <nlohmann/json.hpp> // for json_ref, json
+#include <string>            // for allocator, string
+#include <vector>            // for vector
+
+#include "TraceEvent.hpp" // for TraceEvent
 
 struct TraceEventFile {
     std::vector<TraceEvent> traceEvents;

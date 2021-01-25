@@ -2,18 +2,20 @@
  * @file TraceEvent.hpp.h
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
 #ifndef PROFILER_TRACEEVENT_HPP
 #define PROFILER_TRACEEVENT_HPP
 
+#include <ProfilerLib/Scope.hpp>
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 
 #include "OptionalSerialization.hpp"
 #include "ProfilerUtil.hpp"
+
+NLOHMANN_JSON_SERIALIZE_ENUM(Scope, {{Scope::Global, "g"}, {Scope::Process, "p"}, {Scope::Thread, "t"}})
 
 enum class TraceEventType {
     DurationBegin,
@@ -52,10 +54,6 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TraceEventType,
                               {TraceEventType::MemoryDumpLocal, "v"}, {TraceEventType::Mark, "R"},
                               {TraceEventType::ClockSync, "c"},       {TraceEventType::ContextEnter, "("},
                               {TraceEventType::ContextLeave, ")"}})
-
-enum class Scope { Global, Process, Thread };
-
-NLOHMANN_JSON_SERIALIZE_ENUM(Scope, {{Scope::Global, "g"}, {Scope::Process, "p"}, {Scope::Thread, "t"}})
 
 struct TraceEvent {
     std::string name;

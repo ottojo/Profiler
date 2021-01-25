@@ -2,14 +2,14 @@
  * @file ScopeEvent.cpp.cc
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
 #include "ProfilerLib/ScopeEvent.hpp"
 
-#include <utility>
+#include <utility> // for move
 
-#include "ProfilerLib/ProfilerUtil.hpp"
+#include "ProfilerLib/Profiler.hpp" // for Profiler
+#include "TraceEvent.hpp"           // for TraceEvent, TraceEventType, Trac...
 
 ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
     TraceEvent e;

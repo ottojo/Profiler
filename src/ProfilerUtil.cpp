@@ -2,10 +2,9 @@
  * @file Time.cpp.c
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
-#include "ProfilerLib/ProfilerUtil.hpp"
+#include "ProfilerUtil.hpp"
 
 #include <unistd.h>
 

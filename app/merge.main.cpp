@@ -5,10 +5,11 @@
  * Tool to merge the trace events of multiple files
  */
 
+#include <cstdlib> // for exit
 #include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <nlohmann/json.hpp>
+#include <iomanip>           // for operator<<, setw
+#include <iostream>          // for char_traits, operator<<, basic_ostream
+#include <nlohmann/json.hpp> // for basic_json<>::array_t, json, basic_json...
 
 int main(int argc, char *argv[]) {
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
     nlohmann::json j1;
     i1 >> j1;
 
-    for (std::size_t i = 2; i < argc; i++) {
+    for (int i = 2; i < argc; i++) {
         std::ifstream i2(argv[i]);
         nlohmann::json j2;
         i2 >> j2;

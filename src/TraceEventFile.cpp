@@ -2,10 +2,9 @@
  * @file TraceEventFile.cpp.c
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
-#include "ProfilerLib/TraceEventFile.hpp"
+#include "TraceEventFile.hpp"
 
 void to_json(nlohmann::json &j, const TraceEventFile &f) {
     j = {{"traceEvents", f.traceEvents}, {"displayTimeUnit", f.displayTimeUnit}};

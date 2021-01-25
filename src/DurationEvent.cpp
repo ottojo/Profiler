@@ -2,12 +2,15 @@
  * @file DurationEvent.cpp.cc
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
 #include "ProfilerLib/DurationEvent.hpp"
 
-#include <utility>
+#include <cassert> // for assert
+#include <utility> // for move
+
+#include "ProfilerLib/Profiler.hpp" // for Profiler
+#include "TraceEvent.hpp"           // for TraceEvent, TraceEventType, Trac...
 
 DurationEvent::DurationEvent(Profiler &p, std::string name) : p{p}, name{std::move(name)} {
 }

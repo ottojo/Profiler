@@ -2,25 +2,30 @@
  * @file Profiler.cpp.cc
  * @author ottojo
  * @date 1/23/21
- * Description here TODO
  */
 
 #include "ProfilerLib/Profiler.hpp"
 
 #include <fstream>
-#include <iostream>
-#include <nlohmann/json.hpp>
-#include <utility>
+#include <iomanip>           // for operator<<, setw
+#include <iostream>          // for basic_ostream, operator<<, endl
+#include <nlohmann/json.hpp> // for basic_json<>::object_t, json, opera...
+#include <utility>           // for move
+
+#include "ProfilerLib/Scope.hpp" // for Scope, Scope::Global
+#include "TraceEvent.hpp"        // for TraceEvent, TraceEventType, TraceEv...
+#include "TraceEventFile.hpp"    // for TraceEventFile, to_json
 
 Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
     name{std::move(name)},
-    outputPath{std::move(outputPath)} {
-    submitInstantEvent("Profiler " + name + " starting", Scope::Global);
+    outputPath{std::move(outputPath)},
+    eventFile{std::make_unique<TraceEventFile>()} {
+    submitInstantEvent("Profiler \"" + this->name + "\" starting", Scope::Global);
 }
 
 void Profiler::submitEvent(const TraceEvent &event) {
     std::lock_guard<std::mutex> lock(eventListMutex);
-    eventFile.traceEvents.emplace_back(event);
+    eventFile->traceEvents.emplace_back(event);
 }
 
 Profiler::~Profiler() {
@@ -60,8 +65,8 @@ void Profiler::submitCounterEvent(const std::string &counterName, const std::map
 }
 
 void Profiler::save() {
-    std::cout << "Profiler saving data" << std::endl;
-    nlohmann::json j = eventFile;
+    std::cout << "Profiler \"" << name << "\" saving data to " << outputPath << std::endl;
+    nlohmann::json j = *eventFile;
     std::ofstream o(outputPath);
     o << std::setw(4) << j << std::endl;
 }

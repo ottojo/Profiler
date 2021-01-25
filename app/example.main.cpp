@@ -1,11 +1,13 @@
-#include <future>
-#include <iostream>
-#include <random>
-#include <thread>
+#include <chrono>   // for milliseconds
+#include <future>   // for future, async
+#include <iostream> // for operator<<, endl, basic_ost...
+#include <random>   // for mt19937, random_device, uni...
+#include <vector>   // for vector
 
-#include "ProfilerLib/DurationEvent.hpp"
-#include "ProfilerLib/Profiler.hpp"
-#include "ProfilerLib/ScopeEvent.hpp"
+#include "ProfilerLib/DurationEvent.hpp" // for DurationEvent
+#include "ProfilerLib/Profiler.hpp"      // for Profiler
+#include "ProfilerLib/Scope.hpp"         // for Scope, Scope::Process
+#include "ProfilerLib/ScopeEvent.hpp"    // for ScopeEvent
 
 std::random_device rd;
 std::mt19937 gen(rd());
