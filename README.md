@@ -25,6 +25,9 @@ add_subdirectory(external/Profiler)
 ```
 
 ## Usage
+Below is a quick overview over the essential functions. Examples are provided in the [app](app) directory. The
+[first](app/example.main.cpp) example showcases multiple methods of using the library. The
+[second](app/example-transform.main.cpp) example uses the library to evaluate the parallel STL algorithms.
 ### Profiler
 Create a `Profiler` instance for every module that should create its own output file.
 A utility for combining multiple such files is provided.
