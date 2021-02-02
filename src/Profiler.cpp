@@ -25,7 +25,9 @@ Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
 
 void Profiler::submitEvent(const TraceEvent &event) {
     std::lock_guard<std::mutex> lock(eventListMutex);
-    eventFile->traceEvents.emplace_back(event);
+    auto e = event;
+    e.name = name + ": " + e.name;
+    eventFile->traceEvents.emplace_back(e);
 }
 
 Profiler::~Profiler() {
