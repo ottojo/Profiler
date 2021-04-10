@@ -26,7 +26,6 @@ Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
 void Profiler::submitEvent(const TraceEvent &event) {
     std::lock_guard<std::mutex> lock(eventListMutex);
     auto e = event;
-    e.name = name + ": " + e.name;
     eventFile->traceEvents.emplace_back(e);
 }
 
@@ -63,6 +62,25 @@ void Profiler::submitCounterEvent(const std::string &counterName, const std::map
     e.ph = TraceEventType::Counter;
     e.name = counterName;
     e.args = data;
+    submitEvent(e);
+}
+
+void Profiler::submitFlowStartEvent(const std::string &eventName, const std::string &category, const std::string &id) {
+    TraceEvent e;
+    e.ph = TraceEventType::FlowStart;
+    e.cat = category;
+    e.id = id;
+    e.name = eventName;
+    submitEvent(e);
+}
+
+void Profiler::submitFlowEndEvent(const std::string &eventName, const std::string &category, const std::string &id) {
+    TraceEvent e;
+    e.ph = TraceEventType::FlowEnd;
+    e.cat = category;
+    e.id = id;
+    e.name = eventName;
+    e.bp = "e"; // Associate with encapsulating slice
     submitEvent(e);
 }
 

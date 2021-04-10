@@ -50,6 +50,20 @@ class Profiler {
      */
     void submitCounterEvent(const std::string &counterName, const std::map<std::string, int> &data);
 
+    /**
+     * @param eventName Name
+     * @param category  Display category in web interface
+     * @param id        Correlates Start and End events
+     */
+    void submitFlowStartEvent(const std::string &eventName, const std::string &category, const std::string &id);
+
+    /**
+     * @param eventName Name
+     * @param category  Display category in web interface
+     * @param id        Correlates Start and End events
+     */
+    void submitFlowEndEvent(const std::string &eventName, const std::string &category, const std::string &id);
+
   private:
     void save();
     void submitEvent(const TraceEvent &event);

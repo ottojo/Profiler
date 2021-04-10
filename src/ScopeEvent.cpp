@@ -14,7 +14,7 @@
 ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
     TraceEvent e;
     e.ph = TraceEventType::DurationBegin;
-    e.name = std::move(name);
+    e.name = p.name + ": " + std::move(name);
     p.submitEvent(e);
 }
 

@@ -63,9 +63,11 @@ struct TraceEvent {
     pid_t pid = profilerUtil::pid();
     std::size_t tid = profilerUtil::tidHash();
     std::optional<Scope> s;
+    std::optional<std::string> id;
+    std::optional<std::string> bp; // Binding point, flow events
     nlohmann::json args;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TraceEvent, name, cat, ph, ts, pid, tid, s, args)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TraceEvent, name, cat, ph, ts, pid, tid, s, id, bp, args)
 };
 
 #endif // PROFILER_TRACEEVENT_HPP

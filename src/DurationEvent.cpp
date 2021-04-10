@@ -19,7 +19,7 @@ void DurationEvent::start() {
     assert(not started);
     TraceEvent e;
     e.ph = TraceEventType::DurationBegin;
-    e.name = name;
+    e.name = p.name + ": " + name;
     p.submitEvent(e);
     started = true;
 }
@@ -28,7 +28,7 @@ void DurationEvent::stop() {
     assert(started);
     TraceEvent e;
     e.ph = TraceEventType::DurationEnd;
-    e.name = name;
+    e.name = p.name + ": " + name;
     p.submitEvent(e);
     started = false;
 }
