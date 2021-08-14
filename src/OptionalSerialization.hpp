@@ -9,6 +9,7 @@
 #define OPTIONALSERIALIZATION_HPP
 
 #include <nlohmann/json.hpp>
+#include <optional>
 
 namespace nlohmann {
     template<typename T>
