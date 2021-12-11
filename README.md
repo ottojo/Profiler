@@ -84,6 +84,19 @@ Counter events are directly submitted to the `Profiler`:
 p.submitCounterEvent("My Counter", {{"a", a}, {"b", b}});
 ```
 
+#### Flow Events
+Flow events are displayed as arrows between points in the trace viewer.
+The start of a flow can be recorded using:
+```c++
+p.submitFlowStartEvent("FlowEventName", "FlowCategory", "flowID-1");
+```
+And the end of a flow:
+```c++
+p.submitFlowEndEvent("FlowEventName", "FlowCategory", "flowID-1");
+```
+Flow start and end need to have the same name, ID and category.
+The trace viewer has checkboxes to show/hide specific categories.
+
 ### Merging
 There may be multiple `Profiler` instances creating multiple json files during the execution of a single
 program. When building with `-DBUILD_EXECUTABLES=On` a `merge` tool is built to combine those:
