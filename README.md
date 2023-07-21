@@ -26,6 +26,7 @@ add_subdirectory(external/Profiler)
 
 To get the library from GitHub directly, use:
 ```cmake
+include(FetchContent)
 FetchContent_Declare(
         profiler
         GIT_REPOSITORY https://github.com/ottojo/Profiler
