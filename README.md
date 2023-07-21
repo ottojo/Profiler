@@ -24,6 +24,16 @@ set(BUILD_EXECUTABLES ON CACHE BOOL "build executable" FORCE)
 add_subdirectory(external/Profiler)
 ```
 
+To get the library from GitHub directly, use:
+```cmake
+FetchContent_Declare(
+        profiler
+        GIT_REPOSITORY https://github.com/ottojo/Profiler
+        GIT_TAG main
+)
+FetchContent_MakeAvailable(profiler)
+```
+
 ## Usage
 Below is a quick overview over the essential functions. Examples are provided in the [app](app) directory. The
 [first](app/example.main.cpp) example showcases multiple methods of using the library. The
