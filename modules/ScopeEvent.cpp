@@ -1,25 +1,27 @@
 /**
- * @file ScopeEvent.cpp.cc
  * @author ottojo
  * @date 1/23/21
  */
 
-#include "ProfilerLib/ScopeEvent.hpp"
+module;
+
 
 #include <utility> // for move
+#include <string>
+#include <simdjson.h>
 
-#include "ProfilerLib/Profiler.hpp" // for Profiler
-#include "TraceEvent.hpp"           // for TraceEvent, TraceEventType, Trac...
+module profiler;
+
 
 ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
     TraceEvent e;
     e.ph = TraceEventType::DurationBegin;
-    e.name = p.name + ": " + std::move(name);
-    p.submitEvent(e);
+    e.name = p.backend.name + ": " + std::move(name);
+    p.backend.submitEvent(e);
 }
 
 ScopeEvent::~ScopeEvent() {
     TraceEvent e;
     e.ph = TraceEventType::DurationEnd;
-    p.submitEvent(e);
+    p.backend.submitEvent(e);
 }

@@ -1,23 +1,26 @@
 /**
- * @file TraceEvent.hpp.h
  * @author ottojo
  * @date 1/23/21
  */
+module;
 
-#ifndef PROFILER_TRACEEVENT_HPP
-#define PROFILER_TRACEEVENT_HPP
+#include <simdjson.h>
 
-#include <ProfilerLib/Scope.hpp>
-#include <nlohmann/json.hpp>
+//#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
+#include <optional>
 
-#include "OptionalSerialization.hpp"
-#include "ProfilerUtil.hpp"
+//#include "OptionalSerialization.hpp"
 
-NLOHMANN_JSON_SERIALIZE_ENUM(Scope, {{Scope::Global, "g"}, {Scope::Process, "p"}, {Scope::Thread, "t"}})
+module profiler:traceevent;
 
-enum class TraceEventType {
+import profiler.scope;
+import :utils;
+
+//NLOHMANN_JSON_SERIALIZE_ENUM(Scope, {{Scope::Global, "g"}, {Scope::Process, "p"}, {Scope::Thread, "t"}})
+
+export enum class TraceEventType {
     DurationBegin,
     DurationEnd,
     Complete,
@@ -42,6 +45,7 @@ enum class TraceEventType {
     ContextLeave
 };
 
+/*
 NLOHMANN_JSON_SERIALIZE_ENUM(TraceEventType,
                              {{TraceEventType::DurationBegin, "B"},   {TraceEventType::DurationEnd, "E"},
                               {TraceEventType::Complete, "X"},        {TraceEventType::Instant, "i"},
@@ -54,8 +58,8 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TraceEventType,
                               {TraceEventType::MemoryDumpLocal, "v"}, {TraceEventType::Mark, "R"},
                               {TraceEventType::ClockSync, "c"},       {TraceEventType::ContextEnter, "("},
                               {TraceEventType::ContextLeave, ")"}})
-
-struct TraceEvent {
+*/
+export struct TraceEvent {
     std::string name;
     std::string cat;
     TraceEventType ph;
@@ -65,9 +69,8 @@ struct TraceEvent {
     std::optional<Scope> s;
     std::optional<std::string> id;
     std::optional<std::string> bp; // Binding point, flow events
-    nlohmann::json args;
+    //nlohmann::json args;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TraceEvent, name, cat, ph, ts, pid, tid, s, id, bp, args)
+   // NLOHMANN_DEFINE_TYPE_INTRUSIVE(TraceEvent, name, cat, ph, ts, pid, tid, s, id, bp, args)
 };
 
-#endif // PROFILER_TRACEEVENT_HPP

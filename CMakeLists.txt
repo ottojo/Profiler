@@ -1,19 +1,37 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.28)
 
 project(ProfilerLib)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror")
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+add_library(profilerLib STATIC)
+target_compile_features(profilerLib PUBLIC cxx_std_20)
+target_compile_options(profilerLib PRIVATE -Wall -Wextra -Wpedantic)
+target_sources(profilerLib
+        PRIVATE
+        modules/profiler_impl.cpp
+        modules/ScopeEvent.cpp
+        modules/DurationEvent.cpp
+        PUBLIC
+        FILE_SET modules
+        TYPE CXX_MODULES
+        FILES
+        modules/profiler.cppm
+        modules/Scope.cppm
+        modules/TraceEvent.cppm
+        modules/TraceEventFile.cppm
+        modules/ProfilerUtil.cppm
+)
 
-if (CMAKE_BUILD_TYPE MATCHES RELEASE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
-else ()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Og")
-endif ()
+include(FetchContent)
+set(SIMDJSON_BUILD_STATIC_LIB ON)
+set(SIMDJSON_DISABLE_DEPRECATED_API ON)
+FetchContent_Declare(
+        simdjson
+        GIT_REPOSITORY https://github.com/simdjson/simdjson.git
+        GIT_TAG v3.9.4
+)
+FetchContent_MakeAvailable(simdjson)
 
-add_library(profilerLib src/Profiler.cpp src/ScopeEvent.cpp src/ProfilerUtil.cpp src/TraceEventFile.cpp src/DurationEvent.cpp)
-target_include_directories(profilerLib PUBLIC external include)
-target_compile_features(profilerLib PUBLIC cxx_std_17)
+target_link_libraries(profilerLib PRIVATE simdjson_static)
 
 option(BUILD_EXECUTABLES "build executable" OFF)
 if (BUILD_EXECUTABLES)

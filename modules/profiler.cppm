@@ -1,35 +1,87 @@
-/**
- * @file Profiler.hpp.h
- * @author ottojo
- * @date 1/23/21
- */
+module;
 
-#ifndef PROFILER_PROFILER_HPP
-#define PROFILER_PROFILER_HPP
+#include <filesystem>
+#include <string>
+#include <map>
+#include <mutex>
+#include <simdjson.h>
 
-#include <filesystem> // for path
-#include <map>        // for map
-#include <memory>     // for unique_ptr
-#include <mutex>      // for mutex
-#include <string>     // for string
+export module profiler;
 
-#include "Scope.hpp" // for Scope
+import profiler.scope;
 
-class DurationEvent;
-class ScopeEvent;
-struct TraceEvent;
-struct TraceEventFile;
+import :traceevent;
+import :traceeventfile;
+
+export class Profiler;
 
 /**
- * The profiler class is responsible for collecting events and writing them to a file on destruction.
+ * RAII class for timing the duration of the ScopeEvent's lifetime (usually the containing scope)
  */
-class Profiler {
+export class ScopeEvent {
+public:
+    /**
+     * Creates a duration start event
+     */
+    ScopeEvent(Profiler &profiler, std::string name);
+
+    ScopeEvent(const ScopeEvent &other) = delete;
+
+    ScopeEvent &operator=(const ScopeEvent &rhs) = delete;
+
+    /**
+     * Creates a duration end event
+     */
+    ~ScopeEvent();
+
+private:
+    Profiler &p;
+};
+
+
+/**
+ * Class for manually creating duration events.
+ * See also ScopeEvent
+ */
+export class DurationEvent {
+public:
+    DurationEvent(Profiler &p, std::string name);
+
+    void start();
+
+    void stop();
+
+private:
+    Profiler &p;
+    std::string name;
+    bool started = false;
+};
+
+class ProfilerBackend {
+public:
+
+    std::string name;
+    std::filesystem::path outputPath;
+    std::unique_ptr<TraceEventFile> eventFile;
+    std::mutex eventListMutex;
+
+    ProfilerBackend(std::string name,
+                    std::filesystem::path outputPath);
+
+    void save();
+
+    void submitEvent(const TraceEvent &event);
+};
+
+export class Profiler {
     // Friend classes used to hide submitEvent from user, who should use public functions of Profiler instead
     friend class ScopeEvent;
+
     friend class DurationEvent;
 
-  public:
+public:
     Profiler(std::string name, std::filesystem::path outputPath);
+
     ~Profiler();
 
     /**
@@ -64,14 +116,6 @@ class Profiler {
      */
     void submitFlowEndEvent(const std::string &eventName, const std::string &category, const std::string &id);
 
-  private:
-    void save();
-    void submitEvent(const TraceEvent &event);
-
-    std::string name;
-    std::filesystem::path outputPath;
-    std::unique_ptr<TraceEventFile> eventFile;
-    std::mutex eventListMutex;
+private:
+    ProfilerBackend backend;
 };
-
-#endif // PROFILER_PROFILER_HPP

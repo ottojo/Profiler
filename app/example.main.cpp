@@ -4,10 +4,8 @@
 #include <random>   // for mt19937, random_device, uni...
 #include <vector>   // for vector
 
-#include "ProfilerLib/DurationEvent.hpp" // for DurationEvent
-#include "ProfilerLib/Profiler.hpp"      // for Profiler
-#include "ProfilerLib/Scope.hpp"         // for Scope, Scope::Process
-#include "ProfilerLib/ScopeEvent.hpp"    // for ScopeEvent
+import profiler;
+import profiler.scope;
 
 std::random_device rd;
 std::mt19937 gen(rd());
