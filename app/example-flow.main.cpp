@@ -6,8 +6,7 @@
  */
 
 #include <thread>
-#include <ProfilerLib/Profiler.hpp>
-#include <ProfilerLib/ScopeEvent.hpp>
+import profiler;
 
 using namespace std;
 using namespace chrono_literals;

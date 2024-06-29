@@ -3,8 +3,18 @@ cmake_minimum_required(VERSION 3.28)
 project(ProfilerLib)
 
 add_library(profilerLib STATIC)
+target_compile_options(profilerLib PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if (CMAKE_BUILD_TYPE MATCHES RELEASE)
+    target_compile_options(profilerLib PRIVATE -O3)
+else ()
+    target_compile_options(profilerLib PRIVATE -Og)
+endif ()
+
 target_compile_features(profilerLib PUBLIC cxx_std_20)
-target_compile_options(profilerLib PRIVATE -Wall -Wextra -Wpedantic)
+
 target_sources(profilerLib
         PRIVATE
         modules/profiler_impl.cpp

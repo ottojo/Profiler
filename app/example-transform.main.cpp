@@ -1,5 +1,5 @@
-#include <ProfilerLib/Profiler.hpp>   // for Profiler
-#include <ProfilerLib/ScopeEvent.hpp> // for ScopeEvent
+import profiler;
+
 #include <algorithm>                  // for transform
 #include <execution>
 #include <numeric> // for iota
