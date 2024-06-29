@@ -8,7 +8,6 @@ module;
 
 #include <utility> // for move
 #include <string>
-#include <simdjson.h>
 
 module profiler;
 

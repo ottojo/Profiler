@@ -9,7 +9,6 @@ module;
 #include <cassert> // for assert
 #include <utility> // for move
 #include <string>
-#include <simdjson.h>
 
 module profiler;
 

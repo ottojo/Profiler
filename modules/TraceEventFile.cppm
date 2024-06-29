@@ -6,9 +6,8 @@
 
 module;
 
-#include <simdjson.h>
+#include <boost/json.hpp>
 
-//#include <nlohmann/json.hpp> // for json_ref, json
 #include <string>            // for allocator, string
 #include <vector>            // for vector
 
@@ -20,15 +19,18 @@ import :traceevent;
 struct TraceEventFile {
     std::vector<TraceEvent> traceEvents;
     std::string displayTimeUnit = "ms";
-    //nlohmann::json metaData = {{"producedBy", "https://github.com/ottojo/Profiler"}};
+    std::vector<std::tuple<std::string, boost::json::value>> metaData = {
+            {"producedBy", "https://github.com/ottojo/Profiler"}};
 };
 
-/*
-void to_json(nlohmann::json &j, const TraceEventFile &f) {
-    j = {{"traceEvents", f.traceEvents}, {"displayTimeUnit", f.displayTimeUnit}};
+
+export void tag_invoke(boost::json::value_from_tag, boost::json::value &jv, TraceEventFile const &f) {
+    boost::json::object jo = {{"traceEvents",     boost::json::value_from(f.traceEvents)},
+                              {"displayTimeUnit", f.displayTimeUnit}};
     // Additional metadata is appended to the other fields, not kept in a metadata object
-    for (const auto &e : f.metaData.get<nlohmann::json::object_t>()) {
-        j[e.first] = e.second;
+    for (const auto &[k, v]: f.metaData) {
+        jo[k] = v;
     }
+    jv = jo;
 }
- */
+

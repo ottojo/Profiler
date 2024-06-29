@@ -8,7 +8,6 @@
 #include <chrono>      // for chrono, high_resolution_clock
 #include <sys/types.h> // for pid_t
 #include <thread>      // for thread, thread::id
-#include <simdjson.h>
 
 
 module profiler:utils;

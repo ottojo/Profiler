@@ -4,7 +4,6 @@ module;
 #include <string>
 #include <map>
 #include <mutex>
-#include <simdjson.h>
 
 export module profiler;
 

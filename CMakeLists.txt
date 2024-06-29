@@ -21,17 +21,8 @@ target_sources(profilerLib
         modules/ProfilerUtil.cppm
 )
 
-include(FetchContent)
-set(SIMDJSON_BUILD_STATIC_LIB ON)
-set(SIMDJSON_DISABLE_DEPRECATED_API ON)
-FetchContent_Declare(
-        simdjson
-        GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-        GIT_TAG v3.9.4
-)
-FetchContent_MakeAvailable(simdjson)
-
-target_link_libraries(profilerLib PRIVATE simdjson_static)
+find_package(Boost REQUIRED COMPONENTS json)
+target_link_libraries(profilerLib PRIVATE Boost::json)
 
 option(BUILD_EXECUTABLES "build executable" OFF)
 if (BUILD_EXECUTABLES)

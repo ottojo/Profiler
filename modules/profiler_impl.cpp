@@ -7,7 +7,8 @@ module;
 #include <map>
 #include <vector>
 #include <optional>
-#include <simdjson.h>
+#include <boost/json.hpp>
+#include <fstream>
 
 module profiler;
 
@@ -38,7 +39,7 @@ void Profiler::setProcessName(const std::string &processName) {
     TraceEvent e;
     e.ph = TraceEventType::Metadata;
     e.name = "process_name";
-    //e.args["name"] = processName;
+    e.args["name"] = processName;
     backend.submitEvent(e);
 
 }
@@ -48,7 +49,7 @@ void Profiler::setThreadName(const std::string &threadName) {
     TraceEvent e;
     e.ph = TraceEventType::Metadata;
     e.name = "thread_name";
-    //e.args["name"] = threadName;
+    e.args["name"] = threadName;
     backend.submitEvent(e);
 
 }
@@ -65,7 +66,7 @@ void Profiler::submitCounterEvent(const std::string &counterName, const std::map
     TraceEvent e;
     e.ph = TraceEventType::Counter;
     e.name = counterName;
-    //e.args = data;
+    e.args = boost::json::value_from(data).as_object();
     backend.submitEvent(e);
 }
 
@@ -90,12 +91,6 @@ void Profiler::submitFlowEndEvent(const std::string &eventName, const std::strin
 
 void ProfilerBackend::save() {
     std::cout << "Profiler \"" << name << "\" saving data to " << outputPath << std::endl;
-
-    for (const TraceEvent &event: eventFile->traceEvents) {
-        std::cout << event.ts << std::endl;
-    }
-
-    /*  nlohmann::json j = *eventFile;
-      std::ofstream o(outputPath);
-      o << std::setw(4) << j << std::endl;*/
+    std::ofstream o(outputPath);
+    o << boost::json::serialize(boost::json::value_from(*eventFile)) << std::endl;
 }
