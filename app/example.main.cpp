@@ -2,6 +2,7 @@
 #include <future>   // for future, async
 #include <iostream> // for operator<<, endl, basic_ost...
 #include <random>   // for mt19937, random_device, uni...
+#include <thread>   // for std::this_thread
 #include <vector>   // for vector
 
 #include "ProfilerLib/DurationEvent.hpp" // for DurationEvent
