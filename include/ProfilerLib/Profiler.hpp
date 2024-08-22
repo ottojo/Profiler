@@ -7,6 +7,7 @@
 #ifndef PROFILER_PROFILER_HPP
 #define PROFILER_PROFILER_HPP
 
+#include <atomic>
 #include <filesystem> // for path
 #include <map>        // for map
 #include <memory>     // for unique_ptr
@@ -64,6 +65,10 @@ class Profiler {
      */
     void submitFlowEndEvent(const std::string &eventName, const std::string &category, const std::string &id);
 
+    void disable();
+
+    [[nodiscard]] bool isEnabled() const;
+
   private:
     void save();
     void submitEvent(const TraceEvent &event);
@@ -72,6 +77,7 @@ class Profiler {
     std::filesystem::path outputPath;
     std::unique_ptr<TraceEventFile> eventFile;
     std::mutex eventListMutex;
+    std::atomic_bool enabled = true;
 };
 
 #endif // PROFILER_PROFILER_HPP

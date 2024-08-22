@@ -30,7 +30,9 @@ void Profiler::submitEvent(const TraceEvent &event) {
 }
 
 Profiler::~Profiler() {
-    save();
+    if (this->enabled) {
+        save();
+    }
 }
 
 void Profiler::setProcessName(const std::string &processName) {
@@ -50,6 +52,10 @@ void Profiler::setThreadName(const std::string &threadName) {
 }
 
 void Profiler::submitInstantEvent(const std::string &eventName, Scope scope) {
+    if (!this->enabled) {
+        return;
+    }
+
     TraceEvent e;
     e.ph = TraceEventType::Instant;
     e.s = scope;
@@ -58,6 +64,10 @@ void Profiler::submitInstantEvent(const std::string &eventName, Scope scope) {
 }
 
 void Profiler::submitCounterEvent(const std::string &counterName, const std::map<std::string, int> &data) {
+    if (!this->enabled) {
+        return;
+    }
+
     TraceEvent e;
     e.ph = TraceEventType::Counter;
     e.name = counterName;
@@ -66,6 +76,10 @@ void Profiler::submitCounterEvent(const std::string &counterName, const std::map
 }
 
 void Profiler::submitFlowStartEvent(const std::string &eventName, const std::string &category, const std::string &id) {
+    if (!this->enabled) {
+        return;
+    }
+
     TraceEvent e;
     e.ph = TraceEventType::FlowStart;
     e.cat = category;
@@ -75,6 +89,10 @@ void Profiler::submitFlowStartEvent(const std::string &eventName, const std::str
 }
 
 void Profiler::submitFlowEndEvent(const std::string &eventName, const std::string &category, const std::string &id) {
+    if (!this->enabled) {
+        return;
+    }
+
     TraceEvent e;
     e.ph = TraceEventType::FlowEnd;
     e.cat = category;
@@ -90,3 +108,11 @@ void Profiler::save() {
     std::ofstream o(outputPath);
     o << std::setw(4) << j << std::endl;
 }
+
+void Profiler::disable() {
+    this->enabled = false;
+}
+
+[[nodiscard]] bool Profiler::isEnabled() const {
+    return enabled;
+};
