@@ -24,6 +24,9 @@ Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
 }
 
 void Profiler::submitEvent(const TraceEvent &event) {
+    if (!this->enabled) {
+        return;
+    }
     std::lock_guard<std::mutex> lock(eventListMutex);
     auto e = event;
     eventFile->traceEvents.emplace_back(e);
