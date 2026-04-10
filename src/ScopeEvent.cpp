@@ -12,6 +12,10 @@
 #include "TraceEvent.hpp"           // for TraceEvent, TraceEventType, Trac...
 
 ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
+    active = p.isEnabled();
+    if (!active) {
+        return;
+    }
     TraceEvent e;
     e.ph = TraceEventType::DurationBegin;
     e.name = p.name + ": " + std::move(name);
@@ -19,7 +23,12 @@ ScopeEvent::ScopeEvent(Profiler &profiler, std::string name) : p{profiler} {
 }
 
 ScopeEvent::~ScopeEvent() {
+    if (!active) {
+        // Prevent submitting DurationEnd when the profiler was disabled at DurationBegin
+        return;
+    }
     TraceEvent e;
     e.ph = TraceEventType::DurationEnd;
-    p.submitEvent(e);
+    // Submit the event even if profiler was disabled in the meantime (only consider enabled state at start)
+    p.submitEvent(e, true);
 }

@@ -30,6 +30,7 @@ class ScopeEvent {
     ~ScopeEvent();
 
   private:
+    bool active;
     Profiler &p;
 };
 

@@ -67,11 +67,16 @@ class Profiler {
 
     void disable();
 
+    void enable();
+
     [[nodiscard]] bool isEnabled() const;
 
-  private:
     void save();
-    void submitEvent(const TraceEvent &event);
+
+  private:
+    // Forcing the event to be submitted causes it to be written even if the profiler is disabled. This is useful when a
+    // task consists of multiple events (such as scopeevent) where the profiler might be disabled during task execution.
+    void submitEvent(const TraceEvent &event, bool force = false);
 
     std::string name;
     std::filesystem::path outputPath;

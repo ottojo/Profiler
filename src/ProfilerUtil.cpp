@@ -22,6 +22,6 @@ namespace profilerUtil {
     }
 
     std::size_t tidHash() {
-        return std::hash<std::thread::id>{}(tid());
+        return std::hash<std::thread::id>{}(tid()) & 0xFFFFFFF;
     }
 } // namespace profilerUtil

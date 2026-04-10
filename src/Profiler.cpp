@@ -23,8 +23,8 @@ Profiler::Profiler(std::string name, std::filesystem::path outputPath) :
     submitInstantEvent("Profiler \"" + this->name + "\" starting", Scope::Global);
 }
 
-void Profiler::submitEvent(const TraceEvent &event) {
-    if (!this->enabled) {
+void Profiler::submitEvent(const TraceEvent &event, bool force) {
+    if (!this->enabled && !force) {
         return;
     }
     std::lock_guard<std::mutex> lock(eventListMutex);
@@ -114,6 +114,10 @@ void Profiler::save() {
 
 void Profiler::disable() {
     this->enabled = false;
+}
+
+void Profiler::enable() {
+    this->enabled = true;
 }
 
 [[nodiscard]] bool Profiler::isEnabled() const {
